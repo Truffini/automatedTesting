@@ -13,14 +13,7 @@ everything_else = {'toys': 9.99, 'tools': 19.99, "school supplies": 29.99, "appl
                    }
 
 
-# print("All Wic eligible food items ", Wic_Eligible_food)
-# print("All clothing items ", clothing)
-# print("Everything else ", everything_else)
-
-
 def get_state(state):
-    # state = 'MA'
-    # state = input('enter state abbreviation - ')
     print(state)
     if state == 'MA':
         sales_tax = .0625
@@ -35,92 +28,65 @@ def get_state(state):
     return sales_tax
 
 
-def get_wic(Wic_item):
-    # print("type checkout to move on to clothing")
-    # Wic_item = input("add Wic item - ")
-    price_of_Wic_item = Wic_Eligible_food.get(Wic_item)
-    # print(price_of_Wic_item)
-    list_of_Wic = []
-
-    if Wic_item != 'checkout':
-        list_of_Wic.append(price_of_Wic_item)
-        # Wic_item = input("add Wic item - ")
-        price_of_Wic_item = Wic_Eligible_food.get(Wic_item)
-        print(price_of_Wic_item)
-        return price_of_Wic_item
-
-    if Wic_item == 'checkout':
-        print(list_of_Wic)
-        Wic_total = 0
-        for price_of_Wic_item in list_of_Wic:
-            Wic_total += price_of_Wic_item
-        print(Wic_total)
-        return Wic_total
+def get_wic():
+    list_of_Wic = ['Eggs', 'Fish', 'Milk']
+    print(list_of_Wic)
+    wic = 0
+    Wic_total = 0
+    while (len(list_of_Wic)) > 0:
+        Wic_total += Wic_Eligible_food.get(list_of_Wic[wic])
+        wic += 1
+        if wic == (len(list_of_Wic)):
+            break
+    print(Wic_total)
+    return Wic_total
 
 
-def get_clothing(clothing_item):
-    # print("type checkout to move to everything else")
-    # clothing_item = input("add clothing item - ")
-    price_of_clothing_item = clothing.get(clothing_item)
-    # print(price_of_clothing_item)
-    list_of_clothing = []
-
-    while clothing_item != 'checkout':
-        list_of_clothing.append(price_of_clothing_item)
-        # clothing_item = input("add clothing item - ")
-        price_of_clothing_item = clothing.get(clothing_item)
-        print(price_of_clothing_item)
-        return price_of_clothing_item
-
-    if clothing_item == 'checkout':
-        print(list_of_clothing)
-        clothing_total = 0
-        for price_of_clothing_item in list_of_clothing:
-            clothing_total += price_of_clothing_item
-        print(clothing_total)
-        return clothing_total
+def get_clothing():
+    list_of_clothing = ['hat', 'shirt', 'pants']
+    print(list_of_clothing)
+    cloth = 0
+    clothing_total = 0
+    while (len(list_of_clothing)) > 0:
+        clothing_total += clothing.get(list_of_clothing[cloth])
+        cloth += 1
+        if cloth == (len(list_of_clothing)):
+            break
+    print(clothing_total)
+    return clothing_total
 
 
-def get_everything_else(everything_else_item):
-    # print("type checkout to finish")
-    # everything_else_item = input("add other item - ")
-    price_of_everything_else_item = everything_else.get(everything_else_item)
-    # print(price_of_everything_else_item)
-    list_of_everything_else = []
-
-    while everything_else_item != 'checkout':
-        list_of_everything_else.append(price_of_everything_else_item)
-        # everything_else_item = input("add  other item - ")
-        price_of_everything_else_item = everything_else.get(everything_else_item)
-        print(price_of_everything_else_item)
-        return price_of_everything_else_item
-
-    if everything_else_item == 'checkout':
-        print(list_of_everything_else)
-        everything_else_total = 0
-        for price_of_everything_else_item in list_of_everything_else:
-            everything_else_total += price_of_everything_else_item
-        print(everything_else_total)
-        return everything_else_total
+def get_everything_else():
+    list_of_other = ['tools', 'toys', 'chair']
+    print(list_of_other)
+    other = 0
+    other_total = 0
+    while (len(list_of_other)) > 0:
+        other_total += everything_else.get(list_of_other[other])
+        other += 1
+        if other == (len(list_of_other)):
+            break
+    print(other_total)
+    return other_total
 
 
-def get_total_sales_tax(clothing_total, everything_else_total, sales_tax, state):
+def get_total_sales_tax(clothing_total, other_total, sales_tax, state):
     if state == 'MA' and clothing_total > 175:
-        sales_tax_total = (clothing_total + everything_else_total) * sales_tax
+        sales_tax_total = (clothing_total + other_total) * sales_tax
         print("sales tax total - ", sales_tax_total)
         return sales_tax_total
     elif state == 'MA' and clothing_total < 175:
-        sales_tax_total = everything_else_total * sales_tax
+        sales_tax_total = other_total * sales_tax
         print("sales tax total - ", sales_tax_total)
         return sales_tax_total
     else:
-        sales_tax_total = (clothing_total + everything_else_total) * sales_tax
+        sales_tax_total = (clothing_total + other_total) * sales_tax
         print("sales tax total - ", sales_tax_total)
         return sales_tax_total
 
 
-def goods_total(Wic_total, clothing_total, everything_else_total):
-    goods_total = Wic_total + clothing_total + everything_else_total
+def goods_total(wic_total, clothing_total, other_total):
+    goods_total = wic_total + clothing_total + other_total
     print("total before tax", goods_total)
     return goods_total
 
@@ -128,11 +94,11 @@ def goods_total(Wic_total, clothing_total, everything_else_total):
 def main():
     state = 'MA'
     sales_tax = get_state(state)
-    Wic_total = get_wic('Fish')
-    clothing_total = get_clothing('gucci')
-    everything_else_total = get_everything_else('tools')
-    total_after_tax = (get_total_sales_tax(clothing_total, everything_else_total, sales_tax, state) +
-                       goods_total(Wic_total, clothing_total, everything_else_total))
+    Wic_total = get_wic()
+    clothing_total = get_clothing()
+    other_total = get_everything_else()
+    total_after_tax = (get_total_sales_tax(clothing_total, other_total, sales_tax, state) +
+                       goods_total(Wic_total, clothing_total, other_total))
     print("total after tax", total_after_tax)
     return total_after_tax
 
